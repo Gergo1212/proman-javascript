@@ -27,9 +27,11 @@ CREATE TABLE cards (
 
 INSERT INTO boards VALUES (1, 'Board 1');
 INSERT INTO boards VALUES (2, 'Board 2');
-INSERT INTO cards VALUES (1, 'new card 1','valami text', 1, 1, 1);
-INSERT INTO cards VALUES (2, 'new card 2','valami text_2', 2, 2, 2);
+
 INSERT INTO columns VALUES (1, 'in progress', 1, 1);
 INSERT INTO columns VALUES (2, 'not in progress', 1, 2);
 INSERT INTO columns VALUES (3, 'test', 1, 3);
 INSERT INTO columns VALUES (4, 'done', 1, 4);
+
+INSERT INTO cards VALUES (1, 'new card 1','valami text', 1, 1, 1);
+INSERT INTO cards VALUES (2, 'new card 2','valami text_2', 1, 1, 2);
