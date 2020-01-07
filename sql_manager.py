@@ -16,7 +16,7 @@ def get_all_data(cursor):
 @connection.connection_handler
 def get_boards_from_db(cursor):
     cursor.execute("""
-                    SELECT board_name FROM boards;
+                    SELECT id, board_name FROM boards;
                        """)
     boards = cursor.fetchall()
     return boards
