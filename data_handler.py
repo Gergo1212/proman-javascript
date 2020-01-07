@@ -1,5 +1,8 @@
 import persistence
+import sql_manager
 
+
+# CSV
 
 def get_card_status(status_id):
     """
@@ -28,3 +31,9 @@ def get_cards_for_board(board_id):
             card['status_id'] = get_card_status(card['status_id'])  # Set textual status for the card
             matching_cards.append(card)
     return matching_cards
+
+
+# SQL
+
+def get_boards_from_db():
+    return sql_manager.get_boards_from_db()
