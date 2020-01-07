@@ -1,5 +1,5 @@
 // It uses data_handler.js to visualize elements
-import { dataHandler } from "./data_handler.js";
+import {dataHandler} from "./data_handler.js";
 
 export let dom = {
     init: function () {
@@ -7,30 +7,40 @@ export let dom = {
     },
     loadBoards: function () {
         // retrieves boards and makes showBoards called
-        dataHandler.getBoards(function(boards){
+        dataHandler.getBoards(function (boards) {
             dom.showBoards(boards);
         });
     },
     showBoards: function (boards) {
         // shows boards appending them to #boards div
         // it adds necessary event listeners also
+        let boardsContainer = document.querySelector('.board-container');
 
-        let boardList = '';
+        for (let board of boards) {
+            let section = document.createElement("section");
+            section.setAttribute("class", "board");
+            let boardHeader = document.createElement("div");
+            boardHeader.setAttribute("class", "board-header");
+            let spanHeader = document.createElement("span");
+            spanHeader.innerHTML = `${board.board_name}`;
+            spanHeader.setAttribute("class", "board-title");
+            let addButton = document.createElement("button")
+            addButton.setAttribute("class", "board-add");
+            addButton.innerHTML = "Add Card";
+            let toggleButton = document.createElement("button");
+            toggleButton.setAttribute("class", "board-toggle");
+            let iTag = document.createElement("i");
+            iTag.setAttribute("class", "fas fa-chevron-down");
 
-        for(let board of boards){
-            boardList += `
-                <li>${board.title}</li>
-            `;
-        }
+            toggleButton.appendChild(iTag);
+            boardHeader.appendChild(spanHeader);
+            boardHeader.appendChild(addButton);
+            boardHeader.appendChild(toggleButton);
+            section.appendChild(boardHeader);
+            boardsContainer.appendChild(section);
 
-        const outerHtml = `
-            <ul class="board-container">
-                ${boardList}
-            </ul>
-        `;
+        };
 
-        let boardsContainer = document.querySelector('#boards');
-        boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
     },
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
