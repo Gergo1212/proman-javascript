@@ -23,6 +23,15 @@ def get_boards_from_db(cursor):
 
 
 @connection.connection_handler
+def get_columns(cursor):
+    cursor.execute("""
+                    SELECT id, column_name, board_id, column_order FROM columns;
+                   """)
+    columns = cursor.fetchall()
+    return columns
+
+
+@connection.connection_handler
 def get_cards_by_board_id(cursor, board_id):
     cursor.execute("""
                     SELECT * FROM cards

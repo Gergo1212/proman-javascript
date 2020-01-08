@@ -18,18 +18,20 @@ export let dom = {
 
         for (let board of boards) {
             let section = document.createElement("section");
-            section.setAttribute("class", "board");
             let boardHeader = document.createElement("div");
-            boardHeader.setAttribute("class", "board-header");
             let spanHeader = document.createElement("span");
+            let addButton = document.createElement("button")
+            let toggleButton = document.createElement("button");
+            let iTag = document.createElement("i");
+
+            section.setAttribute("class", "board");
+            section.dataset.boardIdSet = `${board.id}`;
+            boardHeader.setAttribute("class", "board-header");
             spanHeader.innerHTML = `${board.board_name}`;
             spanHeader.setAttribute("class", "board-title");
-            let addButton = document.createElement("button")
             addButton.setAttribute("class", "board-add");
             addButton.innerHTML = "Add Card";
-            let toggleButton = document.createElement("button");
             toggleButton.setAttribute("class", "board-toggle");
-            let iTag = document.createElement("i");
             iTag.setAttribute("class", "fas fa-chevron-down");
 
             toggleButton.appendChild(iTag);
@@ -38,11 +40,11 @@ export let dom = {
             boardHeader.appendChild(toggleButton);
             section.appendChild(boardHeader);
             boardsContainer.appendChild(section);
-            let cards = dom.loadCards(1);
-            dom.loadCards(1)
+            dom.loadColumns(board.id);
 
         }
-        ;
+
+
 
     },
     loadCards: function (boardId) {
@@ -57,5 +59,37 @@ export let dom = {
         // it adds necessary event listeners also
         console.log(cards);
     },
-    // here comes more features
+    loadColumns: function (boardId) {
+        dataHandler.getColumns(function (columns) {
+            dom.showColumns(columns, boardId);
+        });
+
+
+    },
+    showColumns: function (columns, boardId) {
+        console.log(columns);
+        let section = document.querySelectorAll("section");
+        for (let board of section) {
+            if (board.dataset.boardIdSet == boardId) {
+                let columnsDiv = document.createElement("div");
+                let columnDiv = document.createElement("div");
+                let columnTitleDiv = document.createElement("div");
+                let columnContentDiv = document.createElement("div");
+
+                columnTitleDiv.innerHTML = `${columns.column_name}`;
+
+                columnsDiv.setAttribute("class", "board-columns");
+                columnDiv.setAttribute("class", "board-column");
+                columnTitleDiv.setAttribute("class", "board-column-title");
+                columnContentDiv.setAttribute("class", "board-column_content");
+
+                columnDiv.appendChild(columnTitleDiv);
+                columnDiv.appendChild(columnContentDiv);
+                columnsDiv.appendChild(columnDiv);
+                board.appendChild(columnsDiv);
+            }
+
+        }
+
+    }
 };

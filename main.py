@@ -25,6 +25,15 @@ def get_boards():
     return sql_manager.get_boards_from_db()
 
 
+@app.route("/get-columns")
+@json_response
+def get_columns():
+    """
+    All the boards
+    """
+    return sql_manager.get_columns()
+
+
 @app.route("/get-cards/<int:board_id>")
 @json_response
 def get_cards_for_board(board_id: int):
