@@ -20,7 +20,7 @@ export let dom = {
             let section = document.createElement("section");
             let boardHeader = document.createElement("div");
             let spanHeader = document.createElement("span");
-            let addButton = document.createElement("button")
+            let addButton = document.createElement("button");
             let toggleButton = document.createElement("button");
             let iTag = document.createElement("i");
 
@@ -51,13 +51,13 @@ export let dom = {
     // shows the cards of a board
     showCards: function (cards) {
         // it adds necessary event listeners also
-        let columnContents = document.querySelectorAll("div.board-column-content")
+        let columnContents = document.querySelectorAll("div.board-column-content");
         for (let column of columnContents) {
             for (let card of cards) {
                 if (column.dataset.columnContentColumnSet == card.column_id && column.dataset.columnContentBoardSet == card.board_id) {
                     let cardDiv = document.createElement('div');
                     let cardRemove = document.createElement('div');
-                    let iTagCard = document.createElement("i")
+                    let iTagCard = document.createElement("i");
                     let cardTitle = document.createElement('div');
 
                     cardDiv.setAttribute('class', 'card');
