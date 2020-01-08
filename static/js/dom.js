@@ -44,9 +44,10 @@ export let dom = {
 
         }
 
-
+        ;
 
     },
+
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
         dataHandler.getCardsByBoardId(boardId, function (cards) {
@@ -54,10 +55,22 @@ export let dom = {
         });
 
     },
+
+
     showCards: function (cards) {
         // shows the cards of a board
         // it adds necessary event listeners also
-        console.log(cards);
+        for (let card of cards) {
+            let card = document.createElement('div');
+            let cardRemove = document.createElement('div');
+            let cardTitle = document.createElement('div');
+
+            card.setAttribute('class', 'card');
+            cardRemove.setAttribute('class', 'card-remove');
+            cardTitle.setAttribute('class', 'card-title');
+
+            cardRemove.appendChild(card);
+            cardTitle.appendChild(card);
     },
     loadColumns: function (boardId) {
         dataHandler.getColumns(function (columns) {
@@ -91,5 +104,9 @@ export let dom = {
 
         }
 
+    }
+
+
+        }
     }
 };
