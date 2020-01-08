@@ -21,7 +21,7 @@ def get_boards():
     """
     All the boards
     """
-    return data_handler.get_boards_from_db()
+    return sql_manager.get_boards_from_db()
 
 
 @app.route("/get-cards/<int:board_id>")
@@ -31,7 +31,7 @@ def get_cards_for_board(board_id: int):
     All cards that belongs to a board
     :param board_id: id of the parent board
     """
-    return data_handler.get_cards_for_board(board_id)
+    return sql_manager.get_cards_by_board_id(board_id)
 
 
 def main():

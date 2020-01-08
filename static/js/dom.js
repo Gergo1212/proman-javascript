@@ -12,25 +12,26 @@ export let dom = {
         });
     },
     showBoards: function (boards) {
-        // shows boards appending them to #boards div
-        // it adds necessary event listeners also
         let boardsContainer = document.querySelector('.board-container');
 
         for (let board of boards) {
             let section = document.createElement("section");
-            section.setAttribute("class", "board");
             let boardHeader = document.createElement("div");
-            boardHeader.setAttribute("class", "board-header");
             let spanHeader = document.createElement("span");
+            let addButton = document.createElement("button");
+            let toggleButton = document.createElement("button");
+            let iTag = document.createElement("i");
+
+
+            section.setAttribute("class", "board");
+            boardHeader.setAttribute("class", "board-header");
             spanHeader.innerHTML = `${board.board_name}`;
             spanHeader.setAttribute("class", "board-title");
-            let addButton = document.createElement("button")
             addButton.setAttribute("class", "board-add");
             addButton.innerHTML = "Add Card";
-            let toggleButton = document.createElement("button");
             toggleButton.setAttribute("class", "board-toggle");
-            let iTag = document.createElement("i");
             iTag.setAttribute("class", "fas fa-chevron-down");
+
 
             toggleButton.appendChild(iTag);
             boardHeader.appendChild(spanHeader);
@@ -39,15 +40,31 @@ export let dom = {
             section.appendChild(boardHeader);
             boardsContainer.appendChild(section);
 
-        };
+        }
+        ;
 
     },
+
     loadCards: function (boardId) {
-        // retrieves cards and makes showCards called
+        dataHandler.getCardsByBoardId(function (boardId) {
+            dom.showCards(boardId);
+        });
     },
+
+
     showCards: function (cards) {
-        // shows the cards of a board
-        // it adds necessary event listeners also
-    },
-    // here comes more features
+        for (let card of cards) {
+            let card = document.createElement('div');
+            let cardRemove = document.createElement('div');
+            let cardTitle = document.createElement('div');
+
+            card.setAttribute('class', 'card');
+            cardRemove.setAttribute('class', 'card-remove');
+            cardTitle.setAttribute('class', 'card-title');
+
+            cardRemove.appendChild(card);
+            cardTitle.appendChild(card);
+
+        }
+    }
 };
