@@ -40,12 +40,7 @@ export let dom = {
             boardHeader.appendChild(toggleButton);
             section.appendChild(boardHeader);
             boardsContainer.appendChild(section);
-            dom.loadColumns(board.id);
-
         }
-
-
-
     },
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called

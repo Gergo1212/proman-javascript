@@ -56,7 +56,6 @@ export let dataHandler = {
             callback(response);
         });
     },
-
     getCard: function (cardId, callback) {
         // the card is retrieved and then the callback function is called with the card
     },
