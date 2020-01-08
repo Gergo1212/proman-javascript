@@ -17,6 +17,17 @@ def get_all_data(cursor):
 def get_boards_from_db(cursor):
     cursor.execute("""
                     SELECT id, board_name FROM boards;
-                       """)
+                   """)
     boards = cursor.fetchall()
     return boards
+
+
+@connection.connection_handler
+def get_cards_by_board_id(cursor, board_id):
+    cursor.execute("""
+                    SELECT * FROM cards
+                    WHERE board_id = %(board_id)s;
+                   """,
+                   {"board_id": board_id})
+    cards = cursor.fetchall()
+    return cards
