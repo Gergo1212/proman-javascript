@@ -40,12 +40,7 @@ export let dom = {
             boardHeader.appendChild(toggleButton);
             section.appendChild(boardHeader);
             boardsContainer.appendChild(section);
-            dom.loadColumns(board.id);
-
         }
-
-
-
     },
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
@@ -59,37 +54,36 @@ export let dom = {
         // it adds necessary event listeners also
         console.log(cards);
     },
-    loadColumns: function (boardId) {
+    loadColumns: function () {
         dataHandler.getColumns(function (columns) {
-            dom.showColumns(columns, boardId);
+            dom.showColumns(columns);
         });
 
 
     },
-    showColumns: function (columns, boardId) {
-        console.log(columns);
-        let section = document.querySelectorAll("section");
-        for (let board of section) {
-            if (board.dataset.boardIdSet == boardId) {
-                let columnsDiv = document.createElement("div");
-                let columnDiv = document.createElement("div");
-                let columnTitleDiv = document.createElement("div");
-                let columnContentDiv = document.createElement("div");
+    showColumns: function (columns) {
+        let sections = document.querySelectorAll("section");
+        for (let board of sections) {
+            let columnsDiv = document.createElement("div");
+            for (let column of columns) {
+                if (column.board_id == board.dataset.boardIdSet) {
+                    let columnDiv = document.createElement("div");
+                    let columnTitleDiv = document.createElement("div");
+                    let columnContentDiv = document.createElement("div");
 
-                columnTitleDiv.innerHTML = `${columns.column_name}`;
+                    columnTitleDiv.innerHTML = column.column_name;
 
-                columnsDiv.setAttribute("class", "board-columns");
-                columnDiv.setAttribute("class", "board-column");
-                columnTitleDiv.setAttribute("class", "board-column-title");
-                columnContentDiv.setAttribute("class", "board-column_content");
+                    columnsDiv.setAttribute("class", "board-columns");
+                    columnDiv.setAttribute("class", "board-column");
+                    columnTitleDiv.setAttribute("class", "board-column-title");
+                    columnContentDiv.setAttribute("class", "board-column_content");
 
-                columnDiv.appendChild(columnTitleDiv);
-                columnDiv.appendChild(columnContentDiv);
-                columnsDiv.appendChild(columnDiv);
-                board.appendChild(columnsDiv);
+                    columnDiv.appendChild(columnTitleDiv);
+                    columnDiv.appendChild(columnContentDiv);
+                    columnsDiv.appendChild(columnDiv);
+                    board.appendChild(columnsDiv);
+                }
             }
-
         }
-
     }
 };
