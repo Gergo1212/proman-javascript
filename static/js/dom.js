@@ -44,10 +44,9 @@ export let dom = {
     },
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
-        dataHandler.getCardsByBoardId(boardId, function (cards) {
+        dataHandler.getCards(function (cards) {
             dom.showCards(cards);
         });
-
     },
     // shows the cards of a board
     showCards: function (cards) {
@@ -76,11 +75,8 @@ export let dom = {
                     cardDiv.appendChild(cardTitle);
                     column.appendChild(cardDiv);
                 }
-
             }
         }
-
-
     },
     loadColumns: function () {
         dataHandler.getColumns(function (columns) {
@@ -99,11 +95,10 @@ export let dom = {
                     let columnTitleDiv = document.createElement("div");
                     let columnContentDiv = document.createElement("div");
 
-                    columnTitleDiv.innerHTML = column.column_name;
-
                     columnsDiv.setAttribute("class", "board-columns");
                     columnDiv.setAttribute("class", "board-column");
                     columnTitleDiv.setAttribute("class", "board-column-title");
+                    columnTitleDiv.innerHTML = column.column_name;
                     columnContentDiv.setAttribute("class", "board-column-content");
                     columnContentDiv.dataset.columnContentColumnSet = `${column.id}`;
                     columnContentDiv.dataset.columnContentBoardSet = `${column.board_id}`;
