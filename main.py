@@ -1,7 +1,6 @@
 from flask import Flask, render_template, url_for
 from util import json_response
 
-import data_handler
 import sql_manager
 
 app = Flask(__name__)
@@ -32,6 +31,16 @@ def get_columns():
     All the boards
     """
     return sql_manager.get_columns()
+
+
+@app.route("/get-cards")
+@json_response
+def get_cards():
+    """
+    All cards that belongs to a board
+    :param board_id: id of the parent board
+    """
+    return sql_manager.get_cards()
 
 
 @app.route("/get-cards/<int:board_id>")

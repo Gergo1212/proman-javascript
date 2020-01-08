@@ -44,69 +44,76 @@ export let dom = {
 
         }
 
-        ;
+
 
     },
-
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
-        dataHandler.getCardsByBoardId(boardId, function (cards) {
+        dataHandler.getCards(function (cards) {
             dom.showCards(cards);
         });
-
     },
-
-
+    // shows the cards of a board
     showCards: function (cards) {
-        // shows the cards of a board
         // it adds necessary event listeners also
-        for (let card of cards) {
-            let card = document.createElement('div');
-            let cardRemove = document.createElement('div');
-            let cardTitle = document.createElement('div');
+        console.log(cards);
 
-            card.setAttribute('class', 'card');
-            cardRemove.setAttribute('class', 'card-remove');
-            cardTitle.setAttribute('class', 'card-title');
+        let columnContents = document.querySelectorAll("div.board-column-content")
+        console.log(columnContents);
+        for (let column of columnContents) {
+            for (let card of cards) {
+                if (column.dataset.columnContentColumnSet == card.column_id && column.dataset.columnContentBoardSet == card.board_id) {
+                    let cardDiv = document.createElement('div');
+                    let cardRemove = document.createElement('div');
+                    let iTagCard = document.createElement("i")
+                    let cardTitle = document.createElement('div');
 
-            cardRemove.appendChild(card);
-            cardTitle.appendChild(card);
+                    cardDiv.setAttribute('class', 'card');
+                    cardDiv.dataset.cardIdSet = `${card.id}`;
+                    cardRemove.setAttribute('class', 'card-remove');
+                    iTagCard.setAttribute("class", "fas fa-trash-alt");
+                    cardTitle.setAttribute('class', 'card-title');
+                    cardTitle.innerHTML = `${card.card_text}`;
+
+                    cardRemove.appendChild(iTagCard);
+                    cardDiv.appendChild(cardRemove);
+                    cardDiv.appendChild(cardTitle);
+                    column.appendChild(cardDiv);
+                }
+            }
+        }
     },
-    loadColumns: function (boardId) {
+    loadColumns: function () {
         dataHandler.getColumns(function (columns) {
-            dom.showColumns(columns, boardId);
+            dom.showColumns(columns);
         });
 
 
     },
-    showColumns: function (columns, boardId) {
-        console.log(columns);
-        let section = document.querySelectorAll("section");
-        for (let board of section) {
-            if (board.dataset.boardIdSet == boardId) {
-                let columnsDiv = document.createElement("div");
-                let columnDiv = document.createElement("div");
-                let columnTitleDiv = document.createElement("div");
-                let columnContentDiv = document.createElement("div");
+    showColumns: function (columns) {
+        let sections = document.querySelectorAll("section");
+        for (let board of sections) {
+            let columnsDiv = document.createElement("div");
+            for (let column of columns) {
+                if (column.board_id == board.dataset.boardIdSet) {
+                    let columnDiv = document.createElement("div");
+                    let columnTitleDiv = document.createElement("div");
+                    let columnContentDiv = document.createElement("div");
 
-                columnTitleDiv.innerHTML = `${columns.column_name}`;
+                    columnsDiv.setAttribute("class", "board-columns");
+                    columnDiv.setAttribute("class", "board-column");
+                    columnTitleDiv.setAttribute("class", "board-column-title");
+                    columnTitleDiv.innerHTML = column.column_name;
+                    columnContentDiv.setAttribute("class", "board-column-content");
+                    columnContentDiv.dataset.columnContentColumnSet = `${column.id}`;
+                    columnContentDiv.dataset.columnContentBoardSet = `${column.board_id}`;
 
-                columnsDiv.setAttribute("class", "board-columns");
-                columnDiv.setAttribute("class", "board-column");
-                columnTitleDiv.setAttribute("class", "board-column-title");
-                columnContentDiv.setAttribute("class", "board-column_content");
-
-                columnDiv.appendChild(columnTitleDiv);
-                columnDiv.appendChild(columnContentDiv);
-                columnsDiv.appendChild(columnDiv);
-                board.appendChild(columnsDiv);
+                    columnDiv.appendChild(columnTitleDiv);
+                    columnDiv.appendChild(columnContentDiv);
+                    columnsDiv.appendChild(columnDiv);
+                    board.appendChild(columnsDiv);
+                }
             }
-
-        }
-
-    }
-
-
         }
     }
 };
