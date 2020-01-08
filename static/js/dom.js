@@ -51,10 +51,7 @@ export let dom = {
     // shows the cards of a board
     showCards: function (cards) {
         // it adds necessary event listeners also
-        console.log(cards);
-
         let columnContents = document.querySelectorAll("div.board-column-content")
-        console.log(columnContents);
         for (let column of columnContents) {
             for (let card of cards) {
                 if (column.dataset.columnContentColumnSet == card.column_id && column.dataset.columnContentBoardSet == card.board_id) {
