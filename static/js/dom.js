@@ -49,10 +49,38 @@ export let dom = {
         });
 
     },
+    // shows the cards of a board
     showCards: function (cards) {
-        // shows the cards of a board
         // it adds necessary event listeners also
         console.log(cards);
+
+        let columnContents = document.querySelectorAll("div.board-column-content")
+        console.log(columnContents);
+        for (let column of columnContents) {
+            for (let card of cards) {
+                if (column.dataset.columnContentColumnSet == card.column_id && column.dataset.columnContentBoardSet == card.board_id) {
+                    let cardDiv = document.createElement('div');
+                    let cardRemove = document.createElement('div');
+                    let iTagCard = document.createElement("i")
+                    let cardTitle = document.createElement('div');
+
+                    cardDiv.setAttribute('class', 'card');
+                    cardDiv.dataset.cardIdSet = `${card.id}`;
+                    cardRemove.setAttribute('class', 'card-remove');
+                    iTagCard.setAttribute("class", "fas fa-trash-alt");
+                    cardTitle.setAttribute('class', 'card-title');
+                    cardTitle.innerHTML = `${card.card_text}`;
+
+                    cardRemove.appendChild(iTagCard);
+                    cardDiv.appendChild(cardRemove);
+                    cardDiv.appendChild(cardTitle);
+                    column.appendChild(cardDiv);
+                }
+
+            }
+        }
+
+
     },
     loadColumns: function () {
         dataHandler.getColumns(function (columns) {
@@ -76,7 +104,9 @@ export let dom = {
                     columnsDiv.setAttribute("class", "board-columns");
                     columnDiv.setAttribute("class", "board-column");
                     columnTitleDiv.setAttribute("class", "board-column-title");
-                    columnContentDiv.setAttribute("class", "board-column_content");
+                    columnContentDiv.setAttribute("class", "board-column-content");
+                    columnContentDiv.dataset.columnContentColumnSet = `${column.id}`;
+                    columnContentDiv.dataset.columnContentBoardSet = `${column.board_id}`;
 
                     columnDiv.appendChild(columnTitleDiv);
                     columnDiv.appendChild(columnContentDiv);
