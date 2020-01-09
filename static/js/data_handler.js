@@ -39,9 +39,6 @@ export let dataHandler = {
             callback(response);
         });
     },
-    getBoard: function (boardId, callback) {
-        // the board is retrieved and then the callback function is called with the board
-    },
     getColumns: function (boardId, callback) {
         // the statuses are retrieved and then the callback function is called with the statuses
         this._api_get(`/get-columns/${boardId}`, (response) => {
@@ -49,7 +46,6 @@ export let dataHandler = {
             callback(response);
         });
     },
-
     getCardsByBoardId: function (columnId, callback) {
         // the cards are retrieved and then the callback function is called with the cards
         this._api_get(`/get-cards/${columnId}`, (response) => {
@@ -57,27 +53,17 @@ export let dataHandler = {
             callback(response);
         });
     },
-
-    getCard: function (cardId, callback) {
-        // the card is retrieved and then the callback function is called with the card
-    },
-
     createNewBoard: function (callback) {
         this._api_get('/create-board', (response) => {
             this._data = response;
             callback(response);
         });
     },
-
-    createNewColumn: function(boardId, callback) {
+    createNewColumn: function (boardId, callback) {
         this._api_get(`/create-column/${boardId}`, (response) => {
             this._data = response;
             callback(response)
         });
-    },
-
-    createNewCard: function (cardTitle, boardId, statusId, callback) {
-        // creates new card, saves it and calls the callback function with its data
     },
     updateCardTitle: function (cardId, cardTitle) {
         // updates card title text, saves it and calls the callback function with its data
