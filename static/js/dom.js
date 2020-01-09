@@ -37,6 +37,10 @@ export let dom = {
             section.dataset.boardIdSet = `${board.id}`;
             boardHeader.setAttribute("class", "board-header");
             spanHeader.innerHTML = `${board.board_name}`;
+            spanHeader.dataset.boardIdSet = `${board.id}`;
+            spanHeader.addEventListener('click', function (event) {
+                dom.changeBoardText(event);
+            });
             spanHeader.setAttribute("class", "board-title");
             spanHeader.setAttribute("contenteditable", "true");
             spanHeader.setAttribute("spellcheck", "false");
@@ -44,10 +48,6 @@ export let dom = {
             addButton.innerHTML = "Add Card";
             toggleButton.setAttribute("class", "board-toggle");
             iTag.setAttribute("class", "fas fa-chevron-down");
-
-            spanHeader.addEventListener("focusout", function () {
-                dom.getText();
-            });
 
             toggleButton.appendChild(iTag);
             boardHeader.appendChild(spanHeader);
@@ -85,8 +85,8 @@ export let dom = {
                     cardTitle.dataset.cardTitleIdSet = `${card.id}`;
                     cardTitle.innerHTML = `${card.card_text}`;
 
-                    cardTitle.addEventListener("focusout", function () {
-                        dom.getText();
+                    cardTitle.addEventListener("click", function (event) {
+                        dom.changeCardText(event);
                     });
 
 
@@ -120,13 +120,13 @@ export let dom = {
                     columnTitleDiv.setAttribute("class", "board-column-title");
                     columnTitleDiv.setAttribute("contenteditable", "true");
                     columnTitleDiv.setAttribute("spellcheck", "false");
+                    columnTitleDiv.dataset.columnContentColumnSet = `${column.id}`;
                     columnTitleDiv.innerHTML = column.column_name;
                     columnContentDiv.setAttribute("class", "board-column-content");
                     columnContentDiv.dataset.columnContentColumnSet = `${column.id}`;
                     columnContentDiv.dataset.columnContentBoardSet = `${column.board_id}`;
-
-                    columnTitleDiv.addEventListener('focusout', function () {
-                        dom.getText();
+                    columnTitleDiv.addEventListener('click', function (event) {
+                        dom.changeColumnText(event);
                     });
 
                     columnDiv.appendChild(columnTitleDiv);
@@ -140,12 +140,25 @@ export let dom = {
     createBoard: function (boardTitle) {
         dataHandler.createNewBoard(boardTitle);
     },
-    replaceText: function (event) {
-        //
+    changeCardText: function (event) {
+        event.target.addEventListener("focusout", function (event) {
+            let cardId = event.target.dataset.cardTitleIdSet;
+            let cardTitle = event.target.innerText;
+            dataHandler.updateCardTitle(cardId, cardTitle);
+        })
     },
-    getText: function (event) {
-        console.log(this.dataset);
-        let newTextContent = this.innerText;
-        dataHandler.updateCardTitle(newTextContent);
+    changeColumnText: function (event) {
+        event.target.addEventListener("focusout", function (event) {
+            let columnId = event.target.dataset.columnContentColumnSet;
+            let columnTitle = event.target.innerText;
+            dataHandler.updateColumnTitle(columnId, columnTitle);
+        })
+    },
+    changeBoardText: function (event) {
+        event.target.addEventListener("focusout", function (event) {
+            let boardId = event.target.dataset.boardIdSet;
+            let boardTitle = event.target.innerText;
+            dataHandler.updateBoardTitle(boardId, boardTitle);
+        })
     }
 };
