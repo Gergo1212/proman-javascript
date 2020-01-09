@@ -61,11 +61,27 @@ def create_new_board(cursor, board_title):
 
 
 @connection.connection_handler
-def update_card_title(cursor, card_id, card_text):
-    cursor.execute("""
-                    UPDATE cards 
-                    SET card_text = $(card_text)s
-                    WHERE id = $(card_id)s;
-                   """,
-                   {"card_id": card_id}, {"card_text": card_text})
+def update_board_title(cursor, board_id, board_name):
+    cursor.execute(sql.SQL("""
+                    UPDATE boards 
+                    SET board_name = '{board_name}'
+                    WHERE id = '{board_id}';
+                   """).format(board_name=sql.SQL(board_name), board_id=sql.SQL(board_id)))
 
+
+@connection.connection_handler
+def update_column_title(cursor, column_id, column_name):
+    cursor.execute(sql.SQL("""
+                    UPDATE columns 
+                    SET column_name = '{column_name}'
+                    WHERE id = '{column_id}';
+                   """).format(column_name=sql.SQL(column_name), column_id=sql.SQL(column_id)))
+
+
+@connection.connection_handler
+def update_card_title(cursor, card_id, card_text):
+    cursor.execute(sql.SQL("""
+                    UPDATE cards 
+                    SET card_text = '{card_text}'
+                    WHERE id = '{card_id}';
+                   """).format(card_text=sql.SQL(card_text), card_id=sql.SQL(card_id)))
