@@ -73,15 +73,6 @@ def create_new_column(cursor, board_id):
 
 
 @connection.connection_handler
-def create_new_board(cursor, board_title):
-    cursor.execute("""
-                    INSERT INTO boards (board_name, boards_order) 
-                    VALUES (%(board_title)s, 0);
-                   """,
-                   {"board_title": board_title})
-
-
-@connection.connection_handler
 def update_board_title(cursor, board_id, board_name):
     cursor.execute(sql.SQL("""
                     UPDATE boards 
