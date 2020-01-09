@@ -17,7 +17,7 @@ export let dom = {
     },
 
     clearBoards: function () {
-        document.querySelector('.board-container').textContent = '';
+        document.querySelector('.board-container').innerHTML = '';
     },
 
     clearColumns: function (columnId) {
@@ -31,7 +31,6 @@ export let dom = {
     },
 
     showBoards: function (boards) {
-        console.log('sdpfiusöf8usöf8saifpsa')
         dom.clearBoards();
         let boardsContainer = document.querySelector('.board-container');
 
@@ -66,6 +65,7 @@ export let dom = {
 
             dom.loadColumns(board.id, board);
         }
+        dom.createColumnNew()
     },
 
     loadCards: function (columnId, column) {
