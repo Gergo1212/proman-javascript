@@ -35,24 +35,17 @@ export let dataHandler = {
     getBoard: function (boardId, callback) {
         // the board is retrieved and then the callback function is called with the board
     },
-    getColumns: function (callback) {
+    getColumns: function (boardId, callback) {
         // the statuses are retrieved and then the callback function is called with the statuses
-        this._api_get('/get-columns', (response) => {
-            this._data = response;
-            callback(response);
-        });
-    },
-    getCards: function (callback) {
-        // the status is retrieved and then the callback function is called with the status
-        this._api_get('/get-cards', (response) => {
+        this._api_get(`/get-columns/${boardId}`, (response) => {
             this._data = response;
             callback(response);
         });
     },
 
-    getCardsByBoardId: function (boardId, callback) {
+    getCardsByBoardId: function (columnId, callback) {
         // the cards are retrieved and then the callback function is called with the cards
-        this._api_get(`/get-cards/${boardId}`, (response) => {
+        this._api_get(`/get-cards/${columnId}`, (response) => {
             this._data = response;
             callback(response);
         });
@@ -63,14 +56,14 @@ export let dataHandler = {
     },
 
     createNewBoard: function (callback) {
-        this._api_get(`/create-board`, (response) => {
+        this._api_get('/create-board', (response) => {
             this._data = response;
             callback(response);
         });
     },
 
-    createNewColumn: function(callback) {
-        this._api_get(`/create-board/${boardId}`, (response) => {
+    createNewColumn: function(boardId, callback) {
+        this._api_get(`/create-column/${boardId}`, (response) => {
             this._data = response;
             callback(response)
         });

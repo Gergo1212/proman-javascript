@@ -5,11 +5,11 @@ function init() {
     // init data
     dom.init();
     // loads the boards to the screen
-    dom.loadBoards();
-    dom.loadColumns();
-    dom.loadCards();
-    dom.createBoardNew();
-    dom.createColumnNew();
+
+//    dom.loadColumns();
+//    dom.loadCards();
+
+//    dom.createColumnNew();
 }
 
 init();
