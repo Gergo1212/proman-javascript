@@ -24,8 +24,8 @@ export let dataHandler = {
             },
             body: JSON.stringify(data)
         })
-        .then(response => response.json())
-        .then(json_response => callback(json_response));
+            .then(response => response.json())
+            .then(json_response => callback(json_response));
     },
     init: function () {
     },
@@ -75,10 +75,31 @@ export let dataHandler = {
     createNewCard: function (cardTitle, boardId, statusId, callback) {
         // creates new card, saves it and calls the callback function with its data
     },
-    updateCardTitle: function (cardTitle) {
+    updateCardTitle: function (cardId, cardTitle) {
         // updates card title text, saves it and calls the callback function with its data
-        this._api_post("/update-card-title", {"data": cardTitle}, (response) => {
+        let cardInfo = [];
+        cardInfo.push(cardId);
+        cardInfo.push(cardTitle);
+        this._api_post("/update-card-title", {"data": cardInfo}, (response) => {
             this._data = response;
         });
     },
+    updateBoardTitle: function (boardId, boardTitle) {
+        // updates card title text, saves it and calls the callback function with its data
+        let boardInfo = [];
+        boardInfo.push(boardId);
+        boardInfo.push(boardTitle);
+        this._api_post("/update-board-title", {"data": boardInfo}, (response) => {
+            this._data = response;
+        });
+    },
+    updateColumnTitle: function (columnId, columnTitle) {
+        // updates card title text, saves it and calls the callback function with its data
+        let columnInfo = [];
+        columnInfo.push(columnId);
+        columnInfo.push(columnTitle);
+        this._api_post("/update-column-title", {"data": columnInfo}, (response) => {
+            this._data = response;
+        });
+    }
 };
