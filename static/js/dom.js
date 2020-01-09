@@ -6,7 +6,6 @@ export let dom = {
         dom.loadBoards();
 
     },
-
     loadBoards: function () {
         dataHandler.getBoards(function (boards) {
 
@@ -47,7 +46,13 @@ export let dom = {
             section.dataset.boardIdSet = `${board.id}`;
             boardHeader.setAttribute("class", "board-header");
             spanHeader.innerHTML = `${board.board_name}`;
+            spanHeader.dataset.boardIdSet = `${board.id}`;
+            spanHeader.addEventListener('click', function (event) {
+                dom.changeBoardText(event);
+            });
             spanHeader.setAttribute("class", "board-title");
+            spanHeader.setAttribute("contenteditable", "true");
+            spanHeader.setAttribute("spellcheck", "false");
             addButton.setAttribute("class", "board-add");
             addButton.innerHTML = "Add Card";
             addColumnButton.setAttribute('class', 'column-add');
@@ -87,6 +92,12 @@ export let dom = {
             iTagCard.setAttribute("class", "fas fa-trash-alt");
             cardTitle.setAttribute('class', 'card-title');
             cardTitle.innerHTML = `${card.title}`;
+            cardTitle.setAttribute("contenteditable", "true");
+            cardTitle.setAttribute("spellcheck", "false");
+            cardTitle.dataset.cardTitleIdSet = `${card.id}`;
+            cardTitle.addEventListener("click", function (event) {
+                        dom.changeCardText(event);
+                    });
 
             cardRemove.appendChild(iTagCard);
             cardDiv.appendChild(cardRemove);
@@ -145,6 +156,15 @@ export let dom = {
             columnContentDiv.setAttribute("class", "board-column-content");
             columnContentDiv.dataset.columnContentColumnSet = `${column.id}`;
             columnContentDiv.dataset.columnContentBoardSet = `${column.board_id}`;
+            columnTitleDiv.setAttribute("contenteditable", "true");
+            columnTitleDiv.setAttribute("spellcheck", "false");
+            columnTitleDiv.dataset.columnContentColumnSet = `${column.id}`;
+            columnContentDiv.setAttribute("class", "board-column-content");
+            columnContentDiv.dataset.columnContentColumnSet = `${column.id}`;
+            columnContentDiv.dataset.columnContentBoardSet = `${column.board_id}`;
+            columnTitleDiv.addEventListener('click', function (event) {
+                dom.changeColumnText(event);
+            });
 
             columnDiv.appendChild(columnTitleDiv);
             columnDiv.appendChild(columnContentDiv);
@@ -158,5 +178,30 @@ export let dom = {
             dom.loadCards(column.id, columnsDiv)
         }
     },
+    },
+    createBoard: function (boardTitle) {
+        dataHandler.createNewBoard(boardTitle);
+    },
+    changeCardText: function (event) {
+        event.target.addEventListener("focusout", function (event) {
+            let cardId = event.target.dataset.cardTitleIdSet;
+            let cardTitle = event.target.innerText;
+            dataHandler.updateCardTitle(cardId, cardTitle);
+        })
+    },
+    changeColumnText: function (event) {
+        event.target.addEventListener("focusout", function (event) {
+            let columnId = event.target.dataset.columnContentColumnSet;
+            let columnTitle = event.target.innerText;
+            dataHandler.updateColumnTitle(columnId, columnTitle);
+        })
+    },
+    changeBoardText: function (event) {
+        event.target.addEventListener("focusout", function (event) {
+            let boardId = event.target.dataset.boardIdSet;
+            let boardTitle = event.target.innerText;
+            dataHandler.updateBoardTitle(boardId, boardTitle);
+        })
+    }
 };
 

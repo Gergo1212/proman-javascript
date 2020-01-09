@@ -6,10 +6,6 @@ function init() {
     dom.init();
     // loads the boards to the screen
 
-//    dom.loadColumns();
-//    dom.loadCards();
-
-//    dom.createColumnNew();
 }
 
 init();
