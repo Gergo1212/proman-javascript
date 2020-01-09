@@ -29,10 +29,15 @@ export let dom = {
             boardHeader.setAttribute("class", "board-header");
             spanHeader.innerHTML = `${board.board_name}`;
             spanHeader.setAttribute("class", "board-title");
+            spanHeader.setAttribute("contenteditable", "true");
+            spanHeader.setAttribute("spellcheck", "false");
             addButton.setAttribute("class", "board-add");
             addButton.innerHTML = "Add Card";
             toggleButton.setAttribute("class", "board-toggle");
             iTag.setAttribute("class", "fas fa-chevron-down");
+
+            spanHeader.addEventListener("click", dom.replaceText);
+            spanHeader.addEventListener("focusout", dom.getText);
 
             toggleButton.appendChild(iTag);
             boardHeader.appendChild(spanHeader);
@@ -65,7 +70,13 @@ export let dom = {
                     cardRemove.setAttribute('class', 'card-remove');
                     iTagCard.setAttribute("class", "fas fa-trash-alt");
                     cardTitle.setAttribute('class', 'card-title');
+                    cardTitle.setAttribute("contenteditable", "true");
+                    cardTitle.setAttribute("spellcheck", "false");
                     cardTitle.innerHTML = `${card.card_text}`;
+
+                    cardTitle.addEventListener("click", dom.replaceText);
+                    cardTitle.addEventListener("focusout", dom.getText);
+
 
                     cardRemove.appendChild(iTagCard);
                     cardDiv.appendChild(cardRemove);
@@ -95,10 +106,15 @@ export let dom = {
                     columnsDiv.setAttribute("class", "board-columns");
                     columnDiv.setAttribute("class", "board-column");
                     columnTitleDiv.setAttribute("class", "board-column-title");
+                    columnTitleDiv.setAttribute("contenteditable", "true");
+                    columnTitleDiv.setAttribute("spellcheck", "false");
                     columnTitleDiv.innerHTML = column.column_name;
                     columnContentDiv.setAttribute("class", "board-column-content");
                     columnContentDiv.dataset.columnContentColumnSet = `${column.id}`;
                     columnContentDiv.dataset.columnContentBoardSet = `${column.board_id}`;
+
+                    columnTitleDiv.addEventListener("click", dom.replaceText);
+                    columnTitleDiv.addEventListener("focusout", dom.getText);
 
                     columnDiv.appendChild(columnTitleDiv);
                     columnDiv.appendChild(columnContentDiv);
@@ -107,5 +123,16 @@ export let dom = {
                 }
             }
         }
+    },
+    replaceText: function (event) {
+        console.log(event);
+        console.log(this.innerHTML);
+        console.log("Replace Text");
+    },
+    getText: function (event) {
+        console.log(event);
+        console.log(this);
+        console.log(this.innerText);
+        console.log("Get Text");
     }
 };
