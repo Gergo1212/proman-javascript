@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request
 from util import json_response
 
 import sql_manager
@@ -51,6 +51,30 @@ def get_cards_for_board(board_id: int):
     :param board_id: id of the parent board
     """
     return sql_manager.get_cards_by_board_id(board_id)
+
+
+@app.route("/create-board", methods=['POST'])
+@json_response
+def create_board():
+    """
+    All cards that belongs to a board
+    :param board_id: id of the parent board
+    """
+    board_title = request.get_json()['data']
+
+    return sql_manager.create_new_board(board_title)
+
+
+@app.route("/update-card-title", methods=['POST'])
+@json_response
+def update_card_title():
+    """
+    All cards that belongs to a board
+    :param board_id: id of the parent board
+    """
+    print(f"Ez innen jön {request.get_json()}")
+
+    return sql_manager.update_card_title(card_id, card_title)
 
 
 def main():

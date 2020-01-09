@@ -16,6 +16,15 @@ export let dom = {
         // it adds necessary event listeners also
         let boardsContainer = document.querySelector('.board-container');
 
+        let addNewBoardButton = document.createElement("button");
+        addNewBoardButton.setAttribute("class", "add-new-board-button");
+        addNewBoardButton.innerHTML = "New Board";
+        addNewBoardButton.addEventListener('click', function () {
+            dom.createBoard("New Board");
+        });
+        boardsContainer.appendChild(addNewBoardButton);
+
+
         for (let board of boards) {
             let section = document.createElement("section");
             let boardHeader = document.createElement("div");
@@ -72,6 +81,7 @@ export let dom = {
                     cardTitle.setAttribute('class', 'card-title');
                     cardTitle.setAttribute("contenteditable", "true");
                     cardTitle.setAttribute("spellcheck", "false");
+                    cardTitle.dataset.cardTitleIdSet = `${card.id}`;
                     cardTitle.innerHTML = `${card.card_text}`;
 
                     cardTitle.addEventListener("click", dom.replaceText);
@@ -124,15 +134,17 @@ export let dom = {
             }
         }
     },
+    createBoard: function (boardTitle) {
+        dataHandler.createNewBoard(boardTitle);
+    },
     replaceText: function (event) {
         console.log(event);
         console.log(this.innerHTML);
         console.log("Replace Text");
     },
     getText: function (event) {
-        console.log(event);
-        console.log(this);
-        console.log(this.innerText);
-        console.log("Get Text");
+        console.log(this.dataset);
+        let newTextContent = this.innerText;
+        dataHandler.updateCardTitle(newTextContent);
     }
 };

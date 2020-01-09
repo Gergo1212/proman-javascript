@@ -49,3 +49,23 @@ def get_cards(cursor):
                    """)
     cards = cursor.fetchall()
     return cards
+
+
+@connection.connection_handler
+def create_new_board(cursor, board_title):
+    cursor.execute("""
+                    INSERT INTO boards (board_name, boards_order) 
+                    VALUES (%(board_title)s, 0);
+                   """,
+                   {"board_title": board_title})
+
+
+@connection.connection_handler
+def update_card_title(cursor, card_id, card_text):
+    cursor.execute("""
+                    UPDATE cards 
+                    SET card_text = $(card_text)s
+                    WHERE id = $(card_id)s;
+                   """,
+                   {"card_id": card_id}, {"card_text": card_text})
+
