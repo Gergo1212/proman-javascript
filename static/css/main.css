@@ -16,16 +16,8 @@ h1, .board-title, .board-column-title {
     font-weight: 100;
 }
 
-/*h1 {
-    text-align: center;
-    font-size: 4em;
-    letter-spacing: 5px;
-    transform: scale(1.2, 1);
-    font-family: fantasy;
-}*/
-
 h1 {
-    color: #111;
+    color: #E3AE57;
     font-family: 'Helvetica Neue', sans-serif;
     font-size: 100px;
     font-weight: bold;
@@ -142,12 +134,17 @@ section.board {
 
 .create-board {
     margin-left: 500px;
-    background-color: #085900;
+    color: white;
+    background-color: #DC3D24;
     font-weight: bold;
     font-size: 22px;
     cursor: pointer;
 }
 
 .page-title-content {
-    background-color: rgba(24, 255, 133, 0.92);
+    background-color: #232B2B;
+}
+
+.h1-text {
+    color: #DC3D24;
 }
