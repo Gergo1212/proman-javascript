@@ -45,8 +45,9 @@ export let dom = {
             toggleButton.setAttribute("class", "board-toggle");
             iTag.setAttribute("class", "fas fa-chevron-down");
 
-            spanHeader.addEventListener("click", dom.replaceText);
-            spanHeader.addEventListener("focusout", dom.getText);
+            spanHeader.addEventListener("focusout", function () {
+                dom.getText();
+            });
 
             toggleButton.appendChild(iTag);
             boardHeader.appendChild(spanHeader);
@@ -84,8 +85,9 @@ export let dom = {
                     cardTitle.dataset.cardTitleIdSet = `${card.id}`;
                     cardTitle.innerHTML = `${card.card_text}`;
 
-                    cardTitle.addEventListener("click", dom.replaceText);
-                    cardTitle.addEventListener("focusout", dom.getText);
+                    cardTitle.addEventListener("focusout", function () {
+                        dom.getText();
+                    });
 
 
                     cardRemove.appendChild(iTagCard);
@@ -123,8 +125,9 @@ export let dom = {
                     columnContentDiv.dataset.columnContentColumnSet = `${column.id}`;
                     columnContentDiv.dataset.columnContentBoardSet = `${column.board_id}`;
 
-                    columnTitleDiv.addEventListener("click", dom.replaceText);
-                    columnTitleDiv.addEventListener("focusout", dom.getText);
+                    columnTitleDiv.addEventListener('focusout', function () {
+                        dom.getText();
+                    });
 
                     columnDiv.appendChild(columnTitleDiv);
                     columnDiv.appendChild(columnContentDiv);
@@ -138,9 +141,7 @@ export let dom = {
         dataHandler.createNewBoard(boardTitle);
     },
     replaceText: function (event) {
-        console.log(event);
-        console.log(this.innerHTML);
-        console.log("Replace Text");
+        //
     },
     getText: function (event) {
         console.log(this.dataset);
