@@ -40,32 +40,10 @@ def get_columns(board_id: int):
     return sql_manager.get_columns(board_id)
 
 
-# @app.route("/get-cards")
-# @json_response
-# def get_cards():
-#     """
-#     All cards that belongs to a board
-#     :param board_id: id of the parent board
-#     """
-#     return sql_manager.get_cards()
-
-
 @app.route("/get-cards/<int:column_id>")
 @json_response
 def get_cards(column_id: int):
     return sql_manager.get_cards_by_column_id(column_id)
-
-
-@app.route("/create-board", methods=['POST'])
-@json_response
-def create_board():
-    """
-    All cards that belongs to a board
-    :param board_id: id of the parent board
-    """
-    board_title = request.get_json()['data']
-
-    return sql_manager.create_new_board(board_title)
 
 
 @app.route("/update-board-title", methods=['POST'])
