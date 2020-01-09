@@ -8,6 +8,8 @@ function init() {
     dom.loadBoards();
     dom.loadColumns();
     dom.loadCards();
+    dom.createBoardNew();
+    dom.createColumnNew();
 }
 
 init();

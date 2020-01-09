@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request
 from util import json_response
 
 import sql_manager
@@ -18,9 +18,20 @@ def index():
 @app.route("/get-boards")
 @json_response
 def get_boards():
-    """
-    All the boards
-    """
+    return sql_manager.get_boards_from_db()
+
+
+@app.route('/create-board')
+@json_response
+def create_board():
+    sql_manager.create_new_board()
+    return sql_manager.get_boards_from_db()
+
+
+@app.route('/create-column/<int:board_id>')
+@json_response
+def create_column(board_id: int):
+    sql_manager.create_new_column()
     return sql_manager.get_boards_from_db()
 
 
