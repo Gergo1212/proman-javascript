@@ -17,7 +17,7 @@ export let dom = {
         document.querySelector('.board-container').innerHTML = '';
     },
     clearColumns: function (columnId) {
-        let columns = document.querySelectorAll(".board-column-content")
+        let columns = document.querySelectorAll(".board-column-content");
 
         for (let column of columns) {
             if (parseInt(column.dataset.columnContentColumnSet) === columnId) {
@@ -28,10 +28,6 @@ export let dom = {
     showBoards: function (boards) {
         dom.clearBoards();
         let boardsContainer = document.querySelector('.board-container');
-        //let addNewBoardButton = document.createElement("button");
-        //addNewBoardButton.setAttribute("class", "create-board");
-        //addNewBoardButton.innerText = "New Board";
-        // boardsContainer.appendChild(addNewBoardButton);
 
         for (let board of boards) {
             let section = document.createElement("section");
