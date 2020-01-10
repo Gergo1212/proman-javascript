@@ -137,6 +137,7 @@ export let dom = {
     showColumns: function (columns, board) {
         let columnsDiv = document.createElement("div");
         for (let column of columns) {
+            dom.clearColumns(column.id);
 
             let columnDiv = document.createElement("div");
             let columnTitleDiv = document.createElement("div");
