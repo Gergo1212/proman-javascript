@@ -5,7 +5,6 @@ export let dom = {
     init: function () {
         dom.loadBoards();
     },
-
     loadBoards: function () {
         dataHandler.getBoards(function (boards) {
 
@@ -14,11 +13,9 @@ export let dom = {
             dom.createBoardNew();
         });
     },
-
     clearBoards: function () {
         document.querySelector('.board-container').innerHTML = '';
     },
-
     clearColumns: function (columnId) {
         let columns = document.querySelectorAll(".board-column-content");
 
@@ -28,7 +25,6 @@ export let dom = {
             }
         }
     },
-
     showBoards: function (boards) {
         dom.clearBoards();
         let boardsContainer = document.querySelector('.board-container');
@@ -72,13 +68,11 @@ export let dom = {
         }
         dom.createColumnNew()
     },
-
     loadCards: function (columnId, column) {
         dataHandler.getCardsByBoardId(columnId, function (cards) {
             dom.showCards(cards, column);
         });
     },
-
     showCards: function (cards, columns) {
         for (let card of cards) {
             let cardDiv = document.createElement('div');
@@ -111,7 +105,6 @@ export let dom = {
             }
         }
     },
-
     createBoardNew: function () {
         let boardAddButton = document.querySelector('.create-board');
         boardAddButton.addEventListener('click', function () {
@@ -121,7 +114,6 @@ export let dom = {
 
         });
     },
-
     createColumnNew: function () {
         let colAddButtons = document.querySelectorAll('.column-add');
         for (let button of colAddButtons) {
@@ -133,13 +125,11 @@ export let dom = {
             })
         }
     },
-
     loadColumns: function (boardId, board) {
         dataHandler.getColumns(boardId, function (columns) {
             dom.showColumns(columns, board);
         });
     },
-
     showColumns: function (columns, board) {
         let columnsDiv = document.createElement("div");
         for (let column of columns) {
@@ -178,7 +168,6 @@ export let dom = {
             dom.loadCards(column.id, columnsDiv)
         }
     },
-
     changeCardText: function (event) {
         event.target.addEventListener("focusout", function (event) {
             let cardId = event.target.dataset.cardTitleIdSet;
@@ -186,7 +175,6 @@ export let dom = {
             dataHandler.updateCardTitle(cardId, cardTitle);
         })
     },
-
     changeColumnText: function (event) {
         event.target.addEventListener("focusout", function (event) {
             let columnId = event.target.dataset.columnContentColumnSet;
@@ -194,7 +182,6 @@ export let dom = {
             dataHandler.updateColumnTitle(columnId, columnTitle);
         })
     },
-
     changeBoardText: function (event) {
         event.target.addEventListener("focusout", function (event) {
             let boardId = event.target.dataset.boardIdSet;
