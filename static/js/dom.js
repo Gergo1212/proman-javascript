@@ -24,7 +24,7 @@ export let dom = {
         }
     },
     showBoards: function (boards) {
-        //dom.clearBoards();
+        dom.clearBoards();
         let boardsContainer = document.querySelector('.board-container');
 
         for (let board of boards) {
@@ -95,7 +95,7 @@ export let dom = {
             cardDiv.appendChild(cardRemove);
             cardDiv.appendChild(cardTitle);
 
-            let columns = document.querySelectorAll(".board-column-content")
+            let columns = document.querySelectorAll(".board-column-content");
             for (let htmlColumn of columns) {
                 if (parseInt(htmlColumn.dataset.columnContentColumnSet) === parseInt(card.column_id)) {
                     htmlColumn.appendChild(cardDiv);
@@ -131,7 +131,7 @@ export let dom = {
     showColumns: function (columns, board) {
         let columnsDiv = document.createElement("div");
         for (let column of columns) {
-            //dom.clearColumns(column.id);
+            dom.clearColumns(column.id);
 
             let columnDiv = document.createElement("div");
             let columnTitleDiv = document.createElement("div");
