@@ -9,7 +9,6 @@ export let dom = {
         dataHandler.getBoards(function (boards) {
 
             dom.showBoards(boards);
-            dom.createColumnNew();
             dom.createBoardNew();
         });
     },
@@ -18,7 +17,6 @@ export let dom = {
     },
     clearColumns: function (columnId) {
         let columns = document.querySelectorAll(".board-column-content");
-
         for (let column of columns) {
             if (parseInt(column.dataset.columnContentColumnSet) === columnId) {
                 column.textContent = '';
@@ -26,7 +24,7 @@ export let dom = {
         }
     },
     showBoards: function (boards) {
-        dom.clearBoards();
+        //dom.clearBoards();
         let boardsContainer = document.querySelector('.board-container');
 
         for (let board of boards) {
@@ -43,12 +41,12 @@ export let dom = {
             boardHeader.setAttribute("class", "board-header");
             spanHeader.innerHTML = `${board.board_name}`;
             spanHeader.dataset.boardIdSet = `${board.id}`;
-            spanHeader.addEventListener('click', function (event) {
-                dom.changeBoardText(event);
-            });
             spanHeader.setAttribute("class", "board-title");
             spanHeader.setAttribute("contenteditable", "true");
             spanHeader.setAttribute("spellcheck", "false");
+            spanHeader.addEventListener('click', function (event) {
+                dom.changeBoardText(event);
+            });
             addButton.setAttribute("class", "board-add");
             addButton.innerHTML = "Add Card";
             addColumnButton.setAttribute('class', 'column-add');
@@ -133,7 +131,7 @@ export let dom = {
     showColumns: function (columns, board) {
         let columnsDiv = document.createElement("div");
         for (let column of columns) {
-            dom.clearColumns(column.id);
+            //dom.clearColumns(column.id);
 
             let columnDiv = document.createElement("div");
             let columnTitleDiv = document.createElement("div");
@@ -178,16 +176,26 @@ export let dom = {
     changeColumnText: function (event) {
         event.target.addEventListener("focusout", function (event) {
             let columnId = event.target.dataset.columnContentColumnSet;
-            let columnTitle = event.target.innerText;
+            let columnTitle = dom.checkForEmptyOrSpaces(event.target.textContent);
+            event.target.textContent = columnTitle;
             dataHandler.updateColumnTitle(columnId, columnTitle);
         })
     },
     changeBoardText: function (event) {
         event.target.addEventListener("focusout", function (event) {
             let boardId = event.target.dataset.boardIdSet;
-            let boardTitle = event.target.innerText;
+            let boardTitle = dom.checkForEmptyOrSpaces(event.target.textContent);
+            event.target.textContent = boardTitle;
             dataHandler.updateBoardTitle(boardId, boardTitle);
         })
+    },
+    checkForEmptyOrSpaces: function (textContent) {
+        if (textContent.replace(/\s/g, "") === "") {
+            return "untitled";
+        } else {
+            return textContent;
+        }
     }
 };
+
 
