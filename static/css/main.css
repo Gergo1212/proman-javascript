@@ -148,3 +148,7 @@ section.board {
 .h1-text {
     color: #DC3D24;
 }
+
+[contenteditable]:focus {
+    outline: 0px solid transparent;
+}
