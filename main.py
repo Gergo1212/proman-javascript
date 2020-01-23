@@ -22,7 +22,6 @@ def get_boards():
 def create_board():
     sql_manager.create_new_board()
     last_added_board = sql_manager.get_last_added_board()
-    print(last_added_board)
 
     return last_added_board
 
@@ -32,9 +31,17 @@ def create_board():
 def create_column(board_id: int):
     sql_manager.create_new_column(board_id)
     last_added_column = sql_manager.get_last_added_column_by_board_id(board_id)
-    print(last_added_column)
 
     return last_added_column
+
+
+@app.route("/create-card/<int:board_id>/<int:column_id>")
+@json_response
+def create_card(board_id, column_id):
+    sql_manager.create_new_card(board_id, column_id)
+    last_added_card = sql_manager.get_last_added_card_by_board_id_column_id(board_id, column_id)
+
+    return last_added_card
 
 
 @app.route("/get-columns/<int:board_id>")
@@ -50,6 +57,7 @@ def get_columns(board_id: int):
 @app.route("/get-cards/<int:column_id>")
 @json_response
 def get_cards(column_id: int):
+
     return sql_manager.get_cards_by_column_id(column_id)
 
 

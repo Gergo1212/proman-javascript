@@ -1,4 +1,3 @@
-// It uses data_handler.js to visualize elements
 import {dataHandler} from "./data_handler.js";
 
 export let dom = {
@@ -22,37 +21,18 @@ export let dom = {
         }
     },
     loadCards: function (columnId, column) {
-        dataHandler.getCardsByBoardId(columnId, function (cards) {
+        dataHandler.getCardsByColumnId(columnId, function (cards) {
             dom.showCards(cards, column);
         });
     },
     showCards: function (cards, columns) {
-        for (let card of cards) {
-            let cardDiv = document.createElement('div');
-            let cardRemove = document.createElement('div');
-            let iTagCard = document.createElement("i");
-            let cardTitle = document.createElement('div');
+        let columnContentDivs = columns.querySelectorAll(".board-column-content");
 
-            cardDiv.setAttribute('class', 'card');
-            cardDiv.dataset.cardIdSet = `${card.id}`;
-            cardRemove.setAttribute('class', 'card-remove');
-            iTagCard.setAttribute("class", "fas fa-trash-alt");
-            cardTitle.setAttribute('class', 'card-title');
-            cardTitle.innerHTML = `${card.title}`;
-            cardTitle.setAttribute("contenteditable", "true");
-            cardTitle.setAttribute("spellcheck", "false");
-            cardTitle.dataset.cardTitleIdSet = `${card.id}`;
-            cardTitle.addEventListener("click", function (event) {
-                dom.changeCardText(event);
-            });
-            cardRemove.appendChild(iTagCard);
-            cardDiv.appendChild(cardRemove);
-            cardDiv.appendChild(cardTitle);
-
-            let columns = document.querySelectorAll(".board-column-content");
-            for (let htmlColumn of columns) {
-                if (parseInt(htmlColumn.dataset.columnContentColumnSet) === parseInt(card.column_id)) {
-                    htmlColumn.appendChild(cardDiv);
+        for (let columnDiv of columnContentDivs) {
+            for (let card of cards) {
+                if (Number(columnDiv.dataset.columnContentColumnSet) === Number(card.column_id)) {
+                    let newCard = dom.createCard(card.id, card.title);
+                    columnDiv.appendChild(newCard);
                 }
             }
         }
@@ -78,7 +58,7 @@ export let dom = {
                 for (let column of columns) {
                     let columnDiv = dom.createColumn(column.column_name, column.id, column.board_id);
                     boardColumn.appendChild(columnDiv);
-                    dom.loadCards(column.id, boardColumn);
+                    dom.loadCards(column.id, columnDiv);
                 }
             }
         }
@@ -124,6 +104,15 @@ export let dom = {
             if (Number(data.board_id) === Number(boardColumn.dataset.boardId)) {
                 let newColumn = dom.createColumn(data.column_name, data.id, data.board_id);
                 boardColumn.appendChild(newColumn);
+            }
+        }
+    },
+    insertNewCard: function (data) {
+        const columnContents = document.querySelectorAll(".board-column-content");
+        for (let columnContent of columnContents) {
+            if (Number(columnContent.dataset.columnContentBoardSet) === Number(data.board_id) && Number(columnContent.dataset.columnContentColumnSet) === Number(data.column_id)) {
+                let newCard = dom.createCard(data.id, data.title);
+                columnContent.appendChild(newCard);
             }
         }
     },
@@ -174,22 +163,29 @@ export let dom = {
         return section
     },
     createColumn: function (columnName, columnId, boardId) {
-        let columnDiv = document.createElement("div"); // OK
+        let columnDiv = document.createElement("div");
         let columnTitleContainer = document.createElement("div");
-        let columnTitleDiv = document.createElement("div"); // Div volt
+        let columnTitleDiv = document.createElement("div");
         let columnContentDiv = document.createElement("div");
         let addNewCardButton = document.createElement("i");
 
-        columnDiv.setAttribute("class", "board-column"); // OK
+        columnDiv.setAttribute("class", "board-column");
         columnTitleContainer.setAttribute("class", "column-title-container");
         columnTitleDiv.setAttribute("class", "board-column-title");
-        columnTitleDiv.innerHTML = `${columnName}`; // OK
+        columnTitleDiv.innerHTML = `${columnName}`;
         columnContentDiv.setAttribute("class", "board-column-content");
-        columnContentDiv.dataset.columnContentColumnSet = `${columnId}`;
         columnContentDiv.dataset.columnContentBoardSet = `${boardId}`;
+        columnContentDiv.dataset.columnContentColumnSet = `${columnId}`;
         addNewCardButton.setAttribute("class", "fas fa-plus-square fa-lg");
-        addNewCardButton.dataset.addNewCardColumnId = `${columnId}`;
         addNewCardButton.dataset.addNewCardBoardId = `${boardId}`;
+        addNewCardButton.dataset.addNewCardColumnId = `${columnId}`;
+        addNewCardButton.addEventListener('click', function () {
+            let columnId = this.dataset.addNewCardColumnId;
+            let boardId = this.dataset.addNewCardBoardId;
+            dataHandler.createNewCard(boardId, columnId, function (data) {
+                dom.insertNewCard(data)
+            });
+        });
         columnTitleDiv.setAttribute("contenteditable", "true");
         columnTitleDiv.setAttribute("spellcheck", "false");
         columnTitleDiv.dataset.columnContentColumnSet = `${columnId}`;
@@ -203,6 +199,31 @@ export let dom = {
         columnDiv.appendChild(columnContentDiv);
 
         return columnDiv;
+    },
+    createCard: function (cardId, cardTitle) {
+        let cardDiv = document.createElement('div');
+        let cardRemove = document.createElement('div');
+        let iTagCard = document.createElement("i");
+        let cardTitleDiv = document.createElement('div');
+
+        cardDiv.setAttribute('class', 'card');
+        cardDiv.dataset.cardIdSet = `${cardId}`;
+        cardRemove.setAttribute('class', 'card-remove');
+        iTagCard.setAttribute("class", "fas fa-trash-alt");
+        cardTitleDiv.setAttribute('class', 'card-title');
+        cardTitleDiv.innerHTML = `${cardTitle}`;
+        cardTitleDiv.setAttribute("contenteditable", "true");
+        cardTitleDiv.setAttribute("spellcheck", "false");
+        cardTitleDiv.dataset.cardTitleIdSet = `${cardId}`;
+        cardTitleDiv.addEventListener("click", function (event) {
+            dom.changeCardText(event);
+        });
+        cardRemove.appendChild(iTagCard);
+        cardDiv.appendChild(cardRemove);
+        cardDiv.appendChild(cardTitleDiv);
+
+        return cardDiv;
+
     }
 };
 

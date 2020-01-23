@@ -59,8 +59,7 @@ def create_new_board(cursor):
     cursor.execute("""
                     INSERT INTO boards (board_name, boards_order)
                     VALUES ('New Board', 0);
-                    """
-                   )
+                    """)
 
 
 @connection.connection_handler
@@ -68,8 +67,15 @@ def create_new_column(cursor, board_id):
     cursor.execute(""" 
                     INSERT INTO columns (column_name, board_id, column_order)
                     VALUES ('New column', %(board_id)s, 0)
-                    """, {'board_id': board_id}
-                   )
+                    """, {'board_id': board_id})
+
+
+@connection.connection_handler
+def create_new_card(cursor, board_id, column_id):
+    cursor.execute("""
+                    INSERT INTO cards (title, card_text, column_id, board_id, card_order)
+                    VALUES ('New card', 'Card text', %(column_id)s, %(board_id)s, 0)
+                    """, {'column_id': column_id, 'board_id': board_id})
 
 
 @connection.connection_handler
@@ -91,12 +97,12 @@ def update_column_title(cursor, column_id, column_name):
 
 
 @connection.connection_handler
-def update_card_title(cursor, card_id, card_text):
+def update_card_title(cursor, card_id, card_title):
     cursor.execute(sql.SQL("""
                     UPDATE cards 
-                    SET card_text = '{card_text}'
+                    SET title = '{card_title}'
                     WHERE id = '{card_id}';
-                   """).format(card_text=sql.SQL(card_text), card_id=sql.SQL(card_id)))
+                   """).format(card_title=sql.SQL(card_title), card_id=sql.SQL(card_id)))
 
 
 @connection.connection_handler
@@ -120,3 +126,13 @@ def get_last_added_column_by_board_id(cursor, board_id):
                    """, {'board_id': board_id})
     column = cursor.fetchone()
     return column
+
+
+@connection.connection_handler
+def get_last_added_card_by_board_id_column_id(cursor, board_id, column_id):
+    cursor.execute("""
+                SELECT * FROM cards
+                WHERE id = (SELECT MAX(id) FROM cards WHERE board_id = %(board_id)s AND column_id = %(column_id)s);
+               """, {'board_id': board_id, 'column_id': column_id})
+    card = cursor.fetchone()
+    return card
