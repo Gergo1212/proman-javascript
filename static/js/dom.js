@@ -7,7 +7,6 @@ export let dom = {
     },
     loadBoards: function () {
         dataHandler.getBoards(function (boards) {
-
             dom.showBoards(boards);
             dom.addNewBoard();
         });
@@ -46,7 +45,6 @@ export let dom = {
             cardTitle.addEventListener("click", function (event) {
                 dom.changeCardText(event);
             });
-
             cardRemove.appendChild(iTagCard);
             cardDiv.appendChild(cardRemove);
             cardDiv.appendChild(cardTitle);
@@ -119,9 +117,7 @@ export let dom = {
         let boardContainer = document.querySelector(".board-container");
         let newBoard = dom.createBoard(data.id, data.board_name);
         boardContainer.appendChild(newBoard);
-
     },
-
     insertNewColumn: function (data) {
         const boardColumns = document.querySelectorAll(".board-columns");
         for (let boardColumn of boardColumns) {
