@@ -109,10 +109,6 @@ section.board {
     background: #eee;
 }
 
-.board-column-title {
-    text-align: center;
-}
-
 .card {
     position: relative;
     background: #222;
@@ -152,7 +148,8 @@ section.board {
 }
 
 .create-board {
-    margin-left: 22%;
+    display: flex;
+    margin: auto;
     color: white;
     background-color: #DC3D24;
     font-weight: bold;
@@ -170,4 +167,25 @@ section.board {
 
 [contenteditable]:focus {
     outline: 0 solid transparent;
+}
+
+.fa-plus-square {
+    display: flex;
+    padding: 5px 0px;
+    color: #6dc993;
+}
+
+.board-column-title {
+    display: inline-block;
+    text-align: center;
+}
+
+.empty-space {
+    display: flex;
+    padding: 5px;
+}
+
+.column-title-container {
+    margin: 0;
+    text-align: center;
 }

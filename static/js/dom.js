@@ -175,15 +175,21 @@ export let dom = {
     },
     createColumn: function (columnName, columnId, boardId) {
         let columnDiv = document.createElement("div"); // OK
-        let columnTitleDiv = document.createElement("div");
+        let columnTitleContainer = document.createElement("div");
+        let columnTitleDiv = document.createElement("div"); // Div volt
         let columnContentDiv = document.createElement("div");
+        let addNewCardButton = document.createElement("i");
 
         columnDiv.setAttribute("class", "board-column"); // OK
-        columnTitleDiv.setAttribute("class", "board-column-title"); // OK
+        columnTitleContainer.setAttribute("class", "column-title-container");
+        columnTitleDiv.setAttribute("class", "board-column-title");
         columnTitleDiv.innerHTML = `${columnName}`; // OK
         columnContentDiv.setAttribute("class", "board-column-content");
         columnContentDiv.dataset.columnContentColumnSet = `${columnId}`;
         columnContentDiv.dataset.columnContentBoardSet = `${boardId}`;
+        addNewCardButton.setAttribute("class", "fas fa-plus-square fa-lg");
+        addNewCardButton.dataset.addNewCardColumnId = `${columnId}`;
+        addNewCardButton.dataset.addNewCardBoardId = `${boardId}`;
         columnTitleDiv.setAttribute("contenteditable", "true");
         columnTitleDiv.setAttribute("spellcheck", "false");
         columnTitleDiv.dataset.columnContentColumnSet = `${columnId}`;
@@ -191,7 +197,9 @@ export let dom = {
             dom.changeColumnText(event);
         });
 
-        columnDiv.appendChild(columnTitleDiv);
+        columnTitleContainer.appendChild(columnTitleDiv);
+        columnTitleContainer.appendChild(addNewCardButton);
+        columnDiv.appendChild(columnTitleContainer);
         columnDiv.appendChild(columnContentDiv);
 
         return columnDiv;
