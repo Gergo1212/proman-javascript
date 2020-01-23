@@ -97,3 +97,19 @@ def update_card_title(cursor, card_id, card_text):
                     SET card_text = '{card_text}'
                     WHERE id = '{card_id}';
                    """).format(card_text=sql.SQL(card_text), card_id=sql.SQL(card_id)))
+
+
+# Refactored queries
+
+@connection.connection_handler
+def get_last_added_board(cursor):
+    cursor.execute("""
+                    SELECT 
+                        id, 
+                        board_name 
+                    FROM boards
+                    WHERE id = (SELECT MAX(id) FROM boards);;
+                   """)
+    boards = cursor.fetchone()
+    return boards
+

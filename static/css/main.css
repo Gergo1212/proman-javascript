@@ -35,9 +35,20 @@ button {
     padding: 4px 10px;
 }
 
+button:focus {
+    outline: 0;
+}
+
 .board-container {
     max-width: 960px;
     margin: 0 auto;
+}
+
+span, h1 {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 section.board {

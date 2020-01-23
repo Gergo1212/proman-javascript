@@ -9,11 +9,8 @@ export let dom = {
         dataHandler.getBoards(function (boards) {
 
             dom.showBoards(boards);
-            dom.createBoardNew();
+            dom.addNewBoard();
         });
-    },
-    clearBoards: function () {
-        document.querySelector('.board-container').innerHTML = '';
     },
     clearColumns: function (columnId) {
         let columns = document.querySelectorAll(".board-column-content");
@@ -24,43 +21,11 @@ export let dom = {
         }
     },
     showBoards: function (boards) {
-        dom.clearBoards();
         let boardsContainer = document.querySelector('.board-container');
 
         for (let board of boards) {
-            let section = document.createElement("section");
-            let boardHeader = document.createElement("div");
-            let spanHeader = document.createElement("span");
-            let addButton = document.createElement("button");
-            let addColumnButton = document.createElement('button');
-            let toggleButton = document.createElement("button");
-            let iTag = document.createElement("i");
-
-            section.setAttribute("class", "board");
-            section.dataset.boardIdSet = `${board.id}`;
-            boardHeader.setAttribute("class", "board-header");
-            spanHeader.innerHTML = `${board.board_name}`;
-            spanHeader.dataset.boardIdSet = `${board.id}`;
-            spanHeader.setAttribute("class", "board-title");
-            spanHeader.setAttribute("contenteditable", "true");
-            spanHeader.setAttribute("spellcheck", "false");
-            spanHeader.addEventListener('click', function (event) {
-                dom.changeBoardText(event);
-            });
-            addButton.setAttribute("class", "board-add");
-            addButton.innerHTML = "Add Card";
-            addColumnButton.setAttribute('class', 'column-add');
-            addColumnButton.innerHTML = 'Add Column';
-            toggleButton.setAttribute("class", "board-toggle");
-            iTag.setAttribute("class", "fas fa-chevron-down");
-
-            toggleButton.appendChild(iTag);
-            boardHeader.appendChild(spanHeader);
-            boardHeader.appendChild(addButton);
-            boardHeader.appendChild(addColumnButton);
-            boardHeader.appendChild(toggleButton);
-            section.appendChild(boardHeader);
-            boardsContainer.appendChild(section);
+            let oneBoard = dom.createBoard(board.id, board.board_name);
+            boardsContainer.appendChild(oneBoard);
 
             dom.loadColumns(board.id, board);
         }
@@ -103,11 +68,11 @@ export let dom = {
             }
         }
     },
-    createBoardNew: function () {
-        let boardAddButton = document.querySelector('.create-board');
-        boardAddButton.addEventListener('click', function () {
+    addNewBoard: function () {
+        let addBoardButton = document.querySelector('.create-board');
+        addBoardButton.addEventListener('click', function () {
             dataHandler.createNewBoard(function (data) {
-                dom.showBoards(data)
+                dom.insertNewBoard(data);
             })
 
         });
@@ -195,6 +160,47 @@ export let dom = {
         } else {
             return textContent;
         }
+    },
+    insertNewBoard: function (data) {
+        let boardContainer = document.querySelector(".board-container");
+        let newBoard = dom.createBoard(data.id, data.board_name);
+        boardContainer.appendChild(newBoard);
+
+    },
+    createBoard: function (boardId, boardName) {
+        let section = document.createElement("section");
+        let boardHeader = document.createElement("div");
+        let spanHeader = document.createElement("span");
+        let addButton = document.createElement("button");
+        let addColumnButton = document.createElement('button');
+        let toggleButton = document.createElement("button");
+        let iTag = document.createElement("i");
+
+        section.setAttribute("class", "board");
+        section.dataset.boardIdSet = `${boardId}`;
+        boardHeader.setAttribute("class", "board-header");
+        spanHeader.innerHTML = `${boardName}`;
+        spanHeader.dataset.boardIdSet = `${boardId}`;
+        spanHeader.setAttribute("class", "board-title");
+        spanHeader.setAttribute("contenteditable", "true");
+        spanHeader.setAttribute("spellcheck", "false");
+        spanHeader.addEventListener('click', function (event) {
+            dom.changeBoardText(event);
+        });
+        addButton.setAttribute("class", "board-add");
+        addButton.innerHTML = "Add Card";
+        addColumnButton.setAttribute('class', 'column-add');
+        addColumnButton.innerHTML = 'Add Column';
+        toggleButton.setAttribute("class", "board-toggle");
+        iTag.setAttribute("class", "fas fa-chevron-down");
+
+        toggleButton.appendChild(iTag);
+        boardHeader.appendChild(spanHeader);
+        boardHeader.appendChild(addButton);
+        boardHeader.appendChild(addColumnButton);
+        boardHeader.appendChild(toggleButton);
+        section.appendChild(boardHeader);
+        return section
     }
 };
 

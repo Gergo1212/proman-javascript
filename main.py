@@ -21,7 +21,10 @@ def get_boards():
 @json_response
 def create_board():
     sql_manager.create_new_board()
-    return sql_manager.get_boards_from_db()
+    last_added_board = sql_manager.get_last_added_board()
+    print(last_added_board)
+
+    return last_added_board
 
 
 @app.route("/create-column/<int:board_id>")
