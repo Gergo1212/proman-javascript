@@ -31,7 +31,10 @@ def create_board():
 @json_response
 def create_column(board_id: int):
     sql_manager.create_new_column(board_id)
-    return sql_manager.get_boards_from_db()
+    last_added_column = sql_manager.get_last_added_column_by_board_id(board_id)
+    print(last_added_column)
+
+    return last_added_column
 
 
 @app.route("/get-columns/<int:board_id>")
@@ -40,6 +43,7 @@ def get_columns(board_id: int):
     """
     All the boards
     """
+
     return sql_manager.get_columns(board_id)
 
 

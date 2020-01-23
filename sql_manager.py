@@ -67,7 +67,7 @@ def create_new_board(cursor):
 def create_new_column(cursor, board_id):
     cursor.execute(""" 
                     INSERT INTO columns (column_name, board_id, column_order)
-                    VALUES ('New Column Name', %(board_id)s, 0)
+                    VALUES ('New column', %(board_id)s, 0)
                     """, {'board_id': board_id}
                    )
 
@@ -99,8 +99,6 @@ def update_card_title(cursor, card_id, card_text):
                    """).format(card_text=sql.SQL(card_text), card_id=sql.SQL(card_id)))
 
 
-# Refactored queries
-
 @connection.connection_handler
 def get_last_added_board(cursor):
     cursor.execute("""
@@ -110,6 +108,15 @@ def get_last_added_board(cursor):
                     FROM boards
                     WHERE id = (SELECT MAX(id) FROM boards);;
                    """)
-    boards = cursor.fetchone()
-    return boards
+    board = cursor.fetchone()
+    return board
 
+
+@connection.connection_handler
+def get_last_added_column_by_board_id(cursor, board_id):
+    cursor.execute("""
+                    SELECT * FROM columns
+                    WHERE board_id = %(board_id)s AND id = (SELECT MAX(id) FROM columns WHERE board_id = %(board_id)s)
+                   """, {'board_id': board_id})
+    column = cursor.fetchone()
+    return column
