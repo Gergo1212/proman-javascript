@@ -131,7 +131,7 @@ export let dom = {
         let section = document.createElement("section");
         let boardHeader = document.createElement("div");
         let spanHeader = document.createElement("span");
-        let addButton = document.createElement("button");
+        let removeBoardButton = document.createElement("button");
         let addColumnButton = document.createElement('button');
         let toggleButton = document.createElement("button");
         let iTag = document.createElement("i");
@@ -151,8 +151,8 @@ export let dom = {
         spanHeader.addEventListener('click', function (event) {
             dom.changeBoardText(event);
         });
-        addButton.setAttribute("class", "board-add");
-        addButton.innerHTML = "Add Card";
+        removeBoardButton.setAttribute("class", "board-remove");
+        removeBoardButton.innerHTML = "Delete Board";
         addColumnButton.setAttribute('class', 'column-add');
         addColumnButton.innerHTML = 'Add Column';
         addColumnButton.addEventListener('click', function () {
@@ -166,8 +166,8 @@ export let dom = {
 
         toggleButton.appendChild(iTag);
         boardHeader.appendChild(spanHeader);
-        boardHeader.appendChild(addButton);
         boardHeader.appendChild(addColumnButton);
+        boardHeader.appendChild(removeBoardButton);
         boardHeader.appendChild(toggleButton);
         section.appendChild(boardHeader);
         section.appendChild(columnsDiv);

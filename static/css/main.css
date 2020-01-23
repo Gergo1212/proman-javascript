@@ -35,6 +35,14 @@ button {
     padding: 4px 10px;
 }
 
+.board-remove {
+    background: #fb3958;
+}
+
+.column-add {
+    background: #6dc993;
+}
+
 button:focus {
     outline: 0;
 }
