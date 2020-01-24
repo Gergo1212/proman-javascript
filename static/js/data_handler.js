@@ -71,30 +71,33 @@ export let dataHandler = {
             callback(response);
         });
     },
-    updateCardTitle: function (cardId, cardTitle) {
-        // updates card title text, saves it and calls the callback function with its data
-        let cardInfo = [];
-        cardInfo.push(cardId);
-        cardInfo.push(cardTitle);
-        this._api_post("/update-card-title", {"data": cardInfo}, (response) => {
-            this._data = response;
-        });
-    },
     updateBoardTitle: function (boardId, boardTitle) {
         // updates card title text, saves it and calls the callback function with its data
-        let boardInfo = [];
-        boardInfo.push(boardId);
-        boardInfo.push(boardTitle);
-        this._api_post("/update-board-title", {"data": boardInfo}, (response) => {
+        const board = {
+            board_id: boardId,
+            board_title: boardTitle
+        };
+        this._api_post("/update-board-title", board, (response) => {
             this._data = response;
         });
     },
     updateColumnTitle: function (columnId, columnTitle) {
         // updates card title text, saves it and calls the callback function with its data
-        let columnInfo = [];
-        columnInfo.push(columnId);
-        columnInfo.push(columnTitle);
-        this._api_post("/update-column-title", {"data": columnInfo}, (response) => {
+        const column = {
+            column_id: columnId,
+            column_title: columnTitle
+        };
+        this._api_post("/update-column-title", column, (response) => {
+            this._data = response;
+        });
+    },
+    updateCardTitle: function (cardId, cardTitle) {
+        // updates card title text, saves it and calls the callback function with its data
+        const card = {
+            card_id: cardId,
+            card_title: cardTitle
+        };
+        this._api_post("/update-card-title", card, (response) => {
             this._data = response;
         });
     }

@@ -57,7 +57,6 @@ def get_columns(board_id: int):
 @app.route("/get-cards/<int:column_id>")
 @json_response
 def get_cards(column_id: int):
-
     return sql_manager.get_cards_by_column_id(column_id)
 
 
@@ -68,10 +67,9 @@ def update_board_title():
     All cards that belongs to a board
     :param board_id: id of the parent board
     """
-    ID_VALUE = 0
-    TITLE_VALUE = 1
-    board_id = request.get_json()['data'][ID_VALUE]
-    board_title = request.get_json()['data'][TITLE_VALUE]
+
+    board_id = request.get_json()['board_id']
+    board_title = request.get_json()['board_title']
 
     return sql_manager.update_board_title(board_id, board_title)
 
@@ -83,10 +81,9 @@ def update_column_title():
     All cards that belongs to a board
     :param board_id: id of the parent board
     """
-    ID_VALUE = 0
-    TITLE_VALUE = 1
-    column_id = request.get_json()['data'][ID_VALUE]
-    column_title = request.get_json()['data'][TITLE_VALUE]
+
+    column_id = request.get_json()['column_id']
+    column_title = request.get_json()['column_title']
 
     return sql_manager.update_column_title(column_id, column_title)
 
@@ -98,10 +95,9 @@ def update_card_title():
     All cards that belongs to a board
     :param board_id: id of the parent board
     """
-    ID_VALUE = 0
-    TITLE_VALUE = 1
-    card_id = request.get_json()['data'][ID_VALUE]
-    card_title = request.get_json()['data'][TITLE_VALUE]
+
+    card_id = request.get_json()['card_id']
+    card_title = request.get_json()['card_title']
 
     return sql_manager.update_card_title(card_id, card_title)
 
