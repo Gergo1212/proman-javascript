@@ -66,7 +66,8 @@ export let dom = {
     changeCardText: function (event) {
         event.target.addEventListener("focusout", function (event) {
             let cardId = event.target.dataset.cardTitleIdSet;
-            let cardTitle = event.target.innerText;
+            let cardTitle = dom.checkForEmptyOrSpaces(event.target.textContent);
+            event.target.textContent = cardTitle;
             dataHandler.updateCardTitle(cardId, cardTitle);
         })
     },
